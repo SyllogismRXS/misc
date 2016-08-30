@@ -86,9 +86,7 @@ int main(int argc, char * argv[])
         py::object my_2_inc = myclass_2.attr("inc");
         cout << "2 - Num: " << py::extract<int>(myclass_2.attr("i")) << endl;
         
-        // Increment 1:
-        my_1_inc(1);
-        
+        my_1_inc(1);        
         my_2_inc(10);
         
         cout << "1 - Num: " << py::extract<int>(myclass_1.attr("i")) << endl;
