@@ -1,6 +1,13 @@
+//
+// http://www.boost.org/doc/libs/1_61_0/libs/python/doc/html/tutorial/tutorial/embedding.html
+// http://www.boost.org/doc/libs/1_61_0/libs/python/doc/html/tutorial/tutorial/object.html
+// http://members.gamedev.net/sicrane/articles/EmbeddingPythonPart1.html
+// http://www.sigverse.org/wiki/en/index.php?Import%20and%20use%20of%20user%20defined%20python%20modules
+// https://misspent.wordpress.com/2009/09/27/how-to-write-boost-python-converters/
+//
+
 #include <iostream>
 #include <stdio.h>
-
 
 #include <boost/python.hpp>  
 #include <Python.h>  
