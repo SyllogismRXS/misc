@@ -48,7 +48,13 @@ INSTALL(DIRECTORY ${SYLLO_INC_DIR} DESTINATION ${CMAKE_INSTALL_PREFIX}
 #  PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
 #)
 
-find_package(openmht REQUIRED)
+#find_package(openmht REQUIRED)
+
+find_package(Boost COMPONENTS thread date_time iostreams program_options regex
+  filesystem system python REQUIRED)
+
+include_directories(${Boost_INCLUDE_DIRS})
+
 
 install(DIRECTORY ${SYLLO_LIB_DIR}/ 
   DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
