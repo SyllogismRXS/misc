@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<data>
+  <behavior name="Linear Formation" id="0"/>
+  <behavior name="Greedy" id="1"/>
+  <behavior name="The Best" id="2"/>    
+</data>
