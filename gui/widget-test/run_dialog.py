@@ -12,8 +12,6 @@ import sys
 import main_dialog
 import my_custom_widget
 
-#sys.modules[''] = my_custom_widget.MyCustomClasses
-
 app = QtWidgets.QApplication(sys.argv)
 mainDialog = QtWidgets.QDialog()
 ui = main_dialog.Ui_mainDialog()
@@ -22,7 +20,6 @@ ui.setupUi(mainDialog)
 #my_widget = my_custom_widget.MyCustomWidget()
 #my_widget.setObjectName("My Widget")
 #ui.verticalLayout.addWidget(my_widget)
-
 
 mainDialog.show()
 sys.exit(app.exec_())
