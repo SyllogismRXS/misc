@@ -10,8 +10,10 @@ set(SYLLO_VERSION_DATE "2012.12.30")
 # give SYLLO 1 series a few more soversions
 set(SYLLO_SOVERSION "00")
 
-set(CMAKE_INSTALL_PREFIX /usr/local)
-
+if(NOT CMAKE_INSTALL_PREFIX)
+  set(CMAKE_INSTALL_PREFIX /usr/local)
+endif()
+  
 # fetch all the local directories for generated code
 get_filename_component(SYLLO_LIB_DIR ./lib ABSOLUTE)
 get_filename_component(SYLLO_BIN_DIR ./bin ABSOLUTE)
@@ -23,10 +25,9 @@ get_filename_component(SYLLO_SCRIPTS_DIR ./scripts ABSOLUTE)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
-set(CMAKE_CXX_FLAGS "-g -Wall")
-
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall") # -fprofile-arcs -ftest-coverage")
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall") # -fprofile-arcs -ftest-coverage")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -g -Wall -std=c++0x")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -Wall -std=c++0x") # -fprofile-arcs -ftest-coverage")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -Wall -std=c++0x") # -fprofile-arcs -ftest-coverage")
 
 set(EXECUTABLE_OUTPUT_PATH ${SYLLO_BIN_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${SYLLO_LIB_DIR})
