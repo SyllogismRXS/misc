@@ -26,7 +26,7 @@ void KinematicCarODE (const oc::ODESolver::StateType& q, const oc::Control* cont
 {
     const double *u = control->as<oc::RealVectorControlSpace::ControlType>()->values;
     const double theta = q[2];
-    double carLength = 0.0002;
+    double carLength = 1.0;//0.0002;
 
     // Zero out qdot
     qdot.resize (q.size (), 0);
@@ -101,12 +101,12 @@ void planWithSimpleSetup()
     ss.setStatePropagator(oc::ODESolver::getStatePropagator(odeSolver, &KinematicCarPostIntegration));
 
     ob::ScopedState<ob::SE2StateSpace> start(space);
-    start->setX(-0.5);
-    start->setY(0.0);
+    start->setX(-0.2);
+    start->setY(-0.3);
     start->setYaw(0.0);
 
     ob::ScopedState<ob::SE2StateSpace> goal(space);
-    goal->setX(0.0);
+    goal->setX(0.4);
     goal->setY(0.5);
     goal->setYaw(0.0);
 
@@ -118,12 +118,12 @@ void planWithSimpleSetup()
 
     if (solved)
     {
-        std::cout << "Found solution:" << std::endl;        
+        std::cout << "Found solution:" << std::endl;
         //ss.getSolutionPath().asGeometric().printAsMatrix(std::cout);
 
         std::ofstream path_stream;
         path_stream.open("./path.txt");
-        ss.getSolutionPath().asGeometric().printAsMatrix(path_stream);        
+        ss.getSolutionPath().asGeometric().printAsMatrix(path_stream);
     }
     else
         std::cout << "No solution found" << std::endl;
@@ -143,7 +143,7 @@ public:
             coord[0] = s->as<ob::SE2StateSpace::StateType>()->getX();
             coord[1] = s->as<ob::SE2StateSpace::StateType>()->getY();
         }
-   
+
     void sampleFullState(const ob::StateSamplerPtr& sampler, const std::vector<double>& coord, ob::State* s) const override
         {
             sampler->sampleUniform(s);
@@ -177,25 +177,25 @@ void plan()
     // set state validity checking for this space
     si->setStateValidityChecker(
         [&si](const ob::State *state) { return isStateValid(si.get(), state); });
-   
+
     // Use the ODESolver to propagate the system.  Call KinematicCarPostIntegration
     // when integration has finished to normalize the orientation values.
     auto odeSolver(std::make_shared<oc::ODEBasicSolver<>>(si, &KinematicCarODE));
     si->setStatePropagator(oc::ODESolver::getStatePropagator(odeSolver, &KinematicCarPostIntegration));
-    
+
     ob::ScopedState<ob::SE2StateSpace> start(space);
-    start->setX(-0.5);
-    start->setY(0.0);
+    start->setX(-0.1);
+    start->setY(-0.1);
     start->setYaw(0.0);
-    
+
     ob::ScopedState<ob::SE2StateSpace> goal(space);
-    goal->setX(0.0);
-    goal->setY(0.5);
+    goal->setX(1);
+    goal->setY(1);
     goal->setYaw(0.0);
 
     // create a problem instance
     auto pdef(std::make_shared<ob::ProblemDefinition>(si));
-    
+
     pdef->setStartAndGoalStates(start, goal, 0.01);
 
     // create a planner for the defined space
@@ -215,7 +215,7 @@ void plan()
     pdef->print(std::cout);
 
     ob::PlannerStatus solved = planner->ob::Planner::solve(10.0);
-    
+
     if (solved) {
         std::cout << "Found solution:" << std::endl;
 
@@ -224,7 +224,7 @@ void plan()
 
         ob::PathPtr path = pdef->getSolutionPath();
         path->as<ompl::geometric::PathGeometric>()->printAsMatrix(path_stream);
-        //pdef->getSolutionPath.asGeometric.printAsMatrix(path_stream);        
+        //pdef->getSolutionPath.asGeometric.printAsMatrix(path_stream);
     } else {
         std::cout << "No solution found" << std::endl;
     }
