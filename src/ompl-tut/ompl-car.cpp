@@ -199,10 +199,10 @@ void plan()
     pdef->setStartAndGoalStates(start, goal, 0.01);
 
     // create a planner for the defined space
-    auto planner(std::make_shared<oc::RRT>(si));
+    //auto planner(std::make_shared<oc::RRT>(si));
     //auto planner(std::make_shared<oc::EST>(si));
-    //auto planner(std::make_shared<oc::KPIECE1>(si));
-    auto decomp(std::make_shared<MyDecomposition>(32, bounds));
+    auto planner(std::make_shared<oc::KPIECE1>(si));
+    //auto decomp(std::make_shared<MyDecomposition>(32, bounds));
     //auto planner(std::make_shared<oc::SyclopEST>(si, decomp));
     //auto planner(std::make_shared<oc::SyclopRRT>(si, decomp));
 
