@@ -11,6 +11,8 @@
 #include <ompl/control/planners/syclop/SyclopEST.h>
 #include <ompl/control/planners/pdst/PDST.h>
 #include <ompl/control/planners/syclop/GridDecomposition.h>
+#include <ompl/base/objectives/PathLengthOptimizationObjective.h>
+#include <ompl/base/OptimizationObjective.h>
 
 #include <iostream>
 #include <fstream>
@@ -151,6 +153,16 @@ public:
         }
 };
 
+
+// Returns a structure representing the optimization objective to use
+// for optimal motion planning. This method returns an objective which
+// attempts to minimize the length in configuration space of computed
+// paths.
+ob::OptimizationObjectivePtr getPathLengthObjective(const ob::SpaceInformationPtr& si)
+{
+    return ob::OptimizationObjectivePtr(new ob::PathLengthOptimizationObjective(si));
+}
+
 void plan()
 {
     auto space(std::make_shared<ob::SE2StateSpace>());
@@ -166,8 +178,8 @@ void plan()
 
     // set the bounds for the control space
     ob::RealVectorBounds cbounds(2);
-    cbounds.setLow(-0.3);
-    cbounds.setHigh(0.3);
+    cbounds.setLow(0.0);//cbounds.setLow(-1.0);
+    cbounds.setHigh(2.0);
 
     cspace->setBounds(cbounds);
 
@@ -184,19 +196,20 @@ void plan()
     si->setStatePropagator(oc::ODESolver::getStatePropagator(odeSolver, &KinematicCarPostIntegration));
 
     ob::ScopedState<ob::SE2StateSpace> start(space);
-    start->setX(-0.1);
-    start->setY(-0.1);
+    start->setX(0.0);
+    start->setY(0.0);
     start->setYaw(0.0);
 
     ob::ScopedState<ob::SE2StateSpace> goal(space);
-    goal->setX(1);
-    goal->setY(1);
-    goal->setYaw(0.0);
+    goal->setX(0.5);
+    goal->setY(0.5);
+    goal->setYaw(90.0 * M_PI / 180.0);
 
     // create a problem instance
     auto pdef(std::make_shared<ob::ProblemDefinition>(si));
 
     pdef->setStartAndGoalStates(start, goal, 0.01);
+    pdef->setOptimizationObjective(getPathLengthObjective(si));
 
     // create a planner for the defined space
     //auto planner(std::make_shared<oc::RRT>(si));
