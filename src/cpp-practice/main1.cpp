@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
     // cout << "p1:" << *p1 << endl;
 
     std::string str = "Kevin";
-    for (int i = 0; i < str.size(); i++) {
+    for (unsigned int i = 0; i < str.size(); i++) {
         cout << str[i] << endl;
     }
 
