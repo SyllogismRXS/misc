@@ -2,6 +2,7 @@ add_executable(main1 main1.cpp)
 add_executable(main2 main2.cpp)
 add_executable(main3 main3.cpp)
 add_executable(pointers pointers.cpp)
+add_executable(weak_pointers weak_pointers.cpp)
 
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} /opt/ros/kinetic)
 find_package(OpenCV)
